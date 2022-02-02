@@ -9,7 +9,7 @@ import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter basename={'Todolist'}>
+        <BrowserRouter basename={'Todolist_rtk'}>
             <App/>
         </BrowserRouter>
     </Provider>,

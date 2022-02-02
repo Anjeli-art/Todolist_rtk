@@ -4,11 +4,11 @@ import {Dispatch} from "redux";
 
 export const handleServerNetworkError = (e:any,dispatch:Dispatch)=> {
     if (e.name === "SyntaxError") {
-       return dispatch(setAppErrorAC(e.message))
+       return dispatch(setAppErrorAC({error:e.message}))
     }
     if (e.message === 'Network Error') {
-        return dispatch(setAppErrorAC("no connection!"))
+        return dispatch(setAppErrorAC({error:"no connection!"}))
     } else {
-        return dispatch(setAppErrorAC("something error"))
+        return dispatch(setAppErrorAC({error:"something error"}))
     }
 }

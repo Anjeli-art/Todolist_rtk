@@ -45,7 +45,7 @@ export const TodolistsList: React.FC<PropsType> = React.memo(({demo = false}) =>
     }, [dispatch])
 
     const TodoChanged = useCallback((value: filterType, todolistid: string) => {
-        dispatch(changeFilterTodoAC(value, todolistid))
+        dispatch(changeFilterTodoAC({filter:value,id: todolistid}))
     }, [dispatch])
     if (!login) {
         return <Navigate to={"login"}/>

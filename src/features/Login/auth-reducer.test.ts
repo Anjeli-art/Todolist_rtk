@@ -7,7 +7,7 @@ test("status login should be correct", () => {
         isLoggedIn: false,
         isInitialized: false
     }
-    const action = setLoginAC(true)
+    const action = setLoginAC({isLoggedIn:true})
     const endState = authReducer(startState, action)
 
     expect(startState!==endState).toBeTruthy()
@@ -21,7 +21,7 @@ test("status initialized should be correct", () => {
         isLoggedIn: false,
         isInitialized: false
     }
-    const action = setInitializedAC(true)
+    const action = setInitializedAC({isInitialized:true})
     const endState = authReducer(startState, action)
 
     expect(startState!==endState).toBeTruthy()

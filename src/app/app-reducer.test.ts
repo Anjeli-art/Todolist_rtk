@@ -11,7 +11,7 @@ beforeEach(() => {
 
 test("status will be changed", () => {
 
-    const action = setAppStatusAC("success")
+    const action = setAppStatusAC({status: "success"})
 
     const endState = appReducer(startState, action)
 
@@ -23,7 +23,7 @@ test("status will be changed", () => {
 })
 test("error will be set", () => {
 
-    const action = setAppErrorAC("some error")
+    const action = setAppErrorAC({error: "some error"})
 
     const endState = appReducer(startState, action)
 
