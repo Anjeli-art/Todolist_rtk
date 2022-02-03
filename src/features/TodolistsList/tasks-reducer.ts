@@ -1,6 +1,6 @@
 import {PriorytiesTask, taskApi, TasksStatuses, TasksType, UpdateTask} from "../../API/todolistAPI";
 import {AppRootType, AppThunk} from "../../app/store";
-import {TypeForTasksAction} from "./todolist-reducer";
+import {addTodolistAC, clearTodolistDateAC, removeTodolistAC, setTodosAC, TypeForTasksAction} from "./todolist-reducer";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
@@ -47,12 +47,23 @@ const slice = createSlice({
                 state[action.payload.todolistId] = action.payload.tasksArray
             }
         },
-    },
-    extrareducers
-:
-{
-}
-}
+        extraReducers: (builder) => {
+            builder.addCase(addTodolistAC, (state, action) => {
+                state[action.payload.todolist.id] = []
+            })
+            builder.addCase(removeTodolistAC, (state, action) => {
+                delete state[action.payload.id]
+            })
+            builder.addCase(setTodosAC, (state, action) => {
+                action.payload.todosArray.forEach((t) => {
+                    state[t.id] = []
+                })
+            })
+            builder.addCase(clearTodolistDateAC, (state, action) => {
+                return {}
+            })
+        }
+    }
 )
 export const {removeTaskAC, addTaskAC, changedTaskAC, setTaskAC} = slice.actions
 export const tasksReducer = slice.reducer
