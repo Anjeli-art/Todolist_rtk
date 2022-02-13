@@ -23,6 +23,6 @@ export const store = configureStore({
 
 export type AppRootActionType = ActionTypeTasks | ActionTypeTodolists | AppActionType|ActionTypeAuth
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootType, unknown, AppRootActionType>
+//export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootType, unknown, AppRootActionType>
 // @ts-ignore
 window.store = store

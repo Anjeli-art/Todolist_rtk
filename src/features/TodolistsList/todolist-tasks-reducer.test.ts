@@ -8,7 +8,7 @@ test("ids should be equals", () => {
     const startTaskState: TaskStateType = {}
     const startTodoState: Array<TodolistsTypeEntity> = []
 
-    const action = addTodolistAC({id: "todolist1", title: "what to learn", addedDate: "", order: 0})
+    const action = addTodolistAC({todolist:{id: "todolist1", title: "what to learn", addedDate: "", order: 0}})
 
     const endTaskState = tasksReducer(startTaskState, action)
     const endTodoState = todolistsReducer(startTodoState, action)
@@ -17,8 +17,8 @@ test("ids should be equals", () => {
     const idFromTask = keys[0]
     const idFromTodolist = endTodoState[0].id
 
-    expect(idFromTask).toBe(action.todolist.id)
-    expect(idFromTodolist).toEqual(action.todolist.id)
+    expect(idFromTask).toBe(action.payload.todolist.id)
+    expect(idFromTodolist).toEqual(action.payload.todolist.id)
     expect(endTodoState[0].title).toBe("what to learn")
 })
 
@@ -43,7 +43,7 @@ test("data should be cleaned", () => {
         {id: "todolist1", title: "What to learn", filter: "all", addedDate: '', entityStatus: "idle", order: 0}
     ]
 
-    const action = clearTodolistDateAC()
+    const action = clearTodolistDateAC({})
 
     const endTaskState = tasksReducer(startTaskState, action)
     const endTodoState = todolistsReducer(startTodoState, action)

@@ -3,7 +3,7 @@ import {AppThunk} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../utils/error-utils";
 import {setTasksTC} from "./tasks-reducer";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TypeForTasksAction =
     ReturnType<typeof removeTodolistAC>
@@ -18,6 +18,36 @@ export type ActionTypeTodolists =
     | ReturnType<typeof changeEntityStatusTodoAC>
 
 const initialState: Array<TodolistsTypeEntity> = []
+
+// export const setTodoTС=createAsyncThunk("todo/setTodoTC",async ({},thunkAPI)=>{
+//     thunkAPI.dispatch(setAppStatusAC({status: "loading"}))
+//     try {
+//         const res = await todolistApi.getTodolists()
+//         thunkAPI.dispatch(setTodosAC({todosArray: res.data}))
+//         res.data.forEach((todo) => {
+//             thunkAPI.dispatch(setTasksTC(todo.id))
+//         })
+//     } catch (e: any) {
+//         handleServerNetworkError(e, thunkAPI.dispatch)
+//     } finally {
+//         thunkAPI.dispatch(setAppStatusAC({status: "success"}))
+//     }
+// })
+export const setTodoTС = (): AppThunk => async dispatch => {
+    dispatch(setAppStatusAC({status: "loading"}))
+    try {
+        const res = await todolistApi.getTodolists()
+        dispatch(setTodosAC({todosArray: res.data}))
+        res.data.forEach((todo) => {
+            dispatch(setTasksTC(todo.id))
+        })
+    } catch (e: any) {
+        handleServerNetworkError(e, dispatch)
+    } finally {
+        dispatch(setAppStatusAC({status: "success"}))
+    }
+}
+
 
 const slice = createSlice({
     name: "todolists",
@@ -142,20 +172,7 @@ export enum ServerResponseResultCode {
     captcha = 10
 }
 
-export const setTodoTС = (): AppThunk => async dispatch => {
-    dispatch(setAppStatusAC({status: "loading"}))
-    try {
-        const res = await todolistApi.getTodolists()
-        dispatch(setTodosAC({todosArray: res.data}))
-        res.data.forEach((todo) => {
-            dispatch(setTasksTC(todo.id))
-        })
-    } catch (e: any) {
-        handleServerNetworkError(e, dispatch)
-    } finally {
-        dispatch(setAppStatusAC({status: "success"}))
-    }
-}
+
 
 export const removeTodoTС = (todolistId: string): AppThunk => async dispatch => {
     dispatch(setAppStatusAC({status: "loading"}))
